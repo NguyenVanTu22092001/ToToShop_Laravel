@@ -1,0 +1,87 @@
+@extends('layouts.app')
+
+@section('content')
+@include('layouts.nav')
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">Thêm sản phẩm</div>
+                @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach($errors->all() as $error)
+                        <li>{{$error}}</li>
+                        @endforeach
+                    </ul>
+                </div>
+                @endif
+                <div class="card-body">
+                    @if (session('status'))
+                    <div class="alert alert-success" role="alert">
+                        {{ session('status') }}
+                    </div>
+                    @endif
+                    <form action="{{route('product.store')}}" method="POST" enctype="multipart/form-data">
+                        @csrf
+                        <div class="mb-3">
+                            <label for="" class="form-label">Title</label>
+                            <input type="text" class="form-control" id="slug" aria-describedby="" onkeyup="ChangeToSlug();" name="title">
+                        </div>
+                        <div class="mb-3">
+                            <label for="" class="form-label">Slug</label>
+                            <input type="text" class="form-control" id="convert_slug" aria-describedby="" name="slug" value="">
+                        </div>
+                        <div class="mb-3">
+                            <label for="" class="form-label">Description</label>
+                            <textarea class="ckeditor form-control" id="description_product" aria-describedby="" name="description"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="" class="form-label">Quantity</label>
+                            <input type="number" class="form-control" id="" aria-describedby="" name="quantity" value="">
+                        </div>
+                        <div class="mb-3">
+                            <label for="" class="form-label">Price</label>
+                            <input type="text" class="form-control" id="" aria-describedby="" name="price" value="">
+                        </div>
+                        <div class="mb-3">
+                            <label for="" class="form-label">Saleoff</label>
+                            <input type="text" class="form-control" id="" aria-describedby="" name="saleoff" value="">
+                        </div>
+                        <div class="mb-3">
+                            <label for="" class="form-label">Category</label>
+                            <select class="form-select" name="categoryname">
+                                @foreach($category as $key =>$cate)
+                                <option value="{{$cate->id}}">{{$cate->title}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="" class="form-label">Collection</label>
+                            <select class="form-select" name="collectionname">
+                                @foreach($collection as $key =>$collections)
+                                <option value="{{$collections->id}}">{{$collections->title}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="" class="form-label">Image</label>
+                            <input type="file" class="form-control" id="" aria-describedby="" name="image">
+                        </div>
+                        <div class="mb-3">
+                            <label for="" class="form-label">Status</label>
+                            <select class="form-select" aria-label="" name="status">
+                                <option value="1">Hiển thị</option>
+                                <option value="0">Không hiển thị </option>
+
+                            </select>
+                        </div>
+                        <br>
+                        <button type="submit" class="btn btn-primary">Add</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@endsection
